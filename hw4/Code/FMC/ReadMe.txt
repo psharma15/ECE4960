@@ -1,0 +1,1 @@
+This folder contains Full Matrix Calculation related functions, similar functionality to SMC.
