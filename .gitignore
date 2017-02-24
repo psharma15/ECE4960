@@ -1,0 +1,7 @@
+#
+ps847_report.docx
+*.docx
+
+# Compressed files
+*.7z
+*.zip
