@@ -1,0 +1,1 @@
+This Folder contains utilities for Sparse Matrix related Calculations (SMC) and testing. The Sparse matrix is in row compressed format.
