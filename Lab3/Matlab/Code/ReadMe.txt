@@ -1,0 +1,2 @@
+paraExtractEKV.m: Calls parameter extraction function (paraExtractLS.m) to find out parameters of EKV model.
+paraExtractValidation.m: Validation of parameter extraction function (paraExtractLS.m) for power law, y = co*exp(m*x)
