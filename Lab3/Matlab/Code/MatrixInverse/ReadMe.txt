@@ -1,0 +1,1 @@
+This folder contains code for matrix inverse using partial pivoting for ill-conditioned matrices.
