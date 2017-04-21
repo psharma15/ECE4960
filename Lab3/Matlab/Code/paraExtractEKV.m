@@ -9,13 +9,15 @@
 % EKV model parameter extraction
 % ------------------------------------------------------------------------
 
-function [res,par,resNorm,resSearch] = paraExtractEKV()
+function [res,par] = paraExtractEKV()
 
     % Solution part 
     %% With ekv model (Task 4)
     % --------------------------------------------------------------------
     YES = 1;
     NO = 0;
+    currentPath = cd;
+    addpath([currentPath,'/ParameterExtraction']);
     
     % --------------------------------------------------------------------
     load('nmosData.mat')
@@ -33,41 +35,41 @@ function [res,par,resNorm,resSearch] = paraExtractEKV()
     [res] = paraExtractLS(par);
         
     % --------------------------------------------------------------------
-    %% With ekv model Normalized wrt true current in sMeas (Task 5)
-    parNorm.sMeas = sMeas;
-    parNorm.sMeas(:,end) = 1;
-    parNorm.sMod = @ekvModel;
-    parNorm.a0 = [8.9e-7; 0.89; 0.75]; % Converging for: [8.9e-7; 0.89; 0.75]
-    parNorm.h = [1e-11; 1e-05; 1e-05];
-    parNorm.mode = 'QN';
-    parNorm.maxIter = 200;
-    parNorm.ls = YES;
-    parNorm.tol = 1e-9;
-
-    tempa0 = sprintf('%10f',(parNorm.a0)');
-    fprintf('Running Parameter Extraction for Normalized EKV Model with initial point: %f\n',tempa0);
-    [resNorm] = paraExtractLS(parNorm);
-    
-    % --------------------------------------------------------------------
-    %% Searching through initial points (Task 6)
-    Is0 = [1e-8,3e-8,1e-7,3e-7,1e-6,3e-6,1e-5,3e-5];
-    K0 = 0.2:0.1:0.8;
-    Vth0 = 1.1:0.1:2.0;
-    vMin = zeros(length(Is0)*length(K0)*length(Vth0),4);
-    count = 1;
-    parSearch = par;
-    for i = 1:length(Is0)
-        for j = 1:length(K0)
-            for k = 1:length(Vth0)
-                parSearch.a0 = [Is0(i);K0(j);Vth0(k)];
-                [resSearch] = paraExtractLS(parSearch);
-                if resSearch.sol~= 0
-                    vMin(count) = [resSearch.v(end),(parSearch.a0)'];
-                end
-                count = count + 1;
-            end
-        end
-    end
+%     %% With ekv model Normalized wrt true current in sMeas (Task 5)
+%     parNorm.sMeas = sMeas;
+%     parNorm.sMeas(:,end) = 1;
+%     parNorm.sMod = @ekvModel;
+%     parNorm.a0 = [8.9e-7; 0.89; 0.75]; % Converging for: [8.9e-7; 0.89; 0.75]
+%     parNorm.h = [1e-11; 1e-05; 1e-05];
+%     parNorm.mode = 'QN';
+%     parNorm.maxIter = 200;
+%     parNorm.ls = YES;
+%     parNorm.tol = 1e-9;
+% 
+%     tempa0 = sprintf('%10f',(parNorm.a0)');
+%     fprintf('Running Parameter Extraction for Normalized EKV Model with initial point: %f\n',tempa0);
+%     [resNorm] = paraExtractLS(parNorm);
+%     
+%     % --------------------------------------------------------------------
+%     %% Searching through initial points (Task 6)
+%     Is0 = [1e-8,3e-8,1e-7,3e-7,1e-6,3e-6,1e-5,3e-5];
+%     K0 = 0.2:0.1:0.8;
+%     Vth0 = 1.1:0.1:2.0;
+%     vMin = zeros(length(Is0)*length(K0)*length(Vth0),4);
+%     count = 1;
+%     parSearch = par;
+%     for i = 1:length(Is0)
+%         for j = 1:length(K0)
+%             for k = 1:length(Vth0)
+%                 parSearch.a0 = [Is0(i);K0(j);Vth0(k)];
+%                 [resSearch] = paraExtractLS(parSearch);
+%                 if resSearch.sol~= 0
+%                     vMin(count) = [resSearch.v(end),(parSearch.a0)'];
+%                 end
+%                 count = count + 1;
+%             end
+%         end
+%     end
 
     %% Post solution checks (for NOT normalized) (Task 4, 7)
     if res.sol ~= 0

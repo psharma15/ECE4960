@@ -10,6 +10,8 @@ function [res,par] = paraExtractValidation()
     % --------------------------
     YES = 1;
     NO = 0;
+    currentPath = cd;
+    addpath([currentPath,'/ParameterExtraction']);
     % --------------------------
     nSample = 10;
     x = logspace(0,3,nSample)';
@@ -19,7 +21,7 @@ function [res,par] = paraExtractValidation()
     sMeas = [x,powerLawTrue(x,c0,m)];
     par.sMeas = sMeas;
     par.sMod = @powerLawModel;
-    par.a0 = [0.9; -0.4];
+    par.a0 = [0; 0];
     par.mode = 'QN';
     par.ls = YES;
     par.maxIter = 100;
@@ -44,6 +46,6 @@ function [res,par] = paraExtractValidation()
     % Generating validation result
     if norm(res.sol - truePara) < par.tol
         fprintf('Parameter Extraction using Least Squares fitting');
-        fprintf('is working correctly.\n');
+        fprintf(' is working correctly.\n');
     end
 end
