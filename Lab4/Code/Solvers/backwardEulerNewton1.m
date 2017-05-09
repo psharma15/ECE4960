@@ -12,7 +12,7 @@ function xt = backwardEulerNewton1(tmin,tmax,delT,xInit,ode,dOde)
 % Input:
 % tmin: Starting Time
 % tmax: Final time
-% delT: Time step (fixed for all ODEs
+% delT: Time step (fixed for all ODEs)
 % xInit: Vector of initial x values
 % ode: Function handle to the ODE to be solved
 % dOde: Function handle to Jacobian needed for Newton method

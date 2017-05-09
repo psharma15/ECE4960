@@ -1,10 +1,13 @@
 %% This code takes sparse matrix in Row Compressed form, do pivoting.
 % Pragya Sharma, March 09, 2017
+% Bug detected: May 09 2017 - If first entry (row 1, column 1) is largest,
+% it is stuck in loop without any changes.
+% Bug corrected: May 09 2017 - Pragya Sharma
 
 function [valueNew,rowPtrNew,colIndNew,bNew,chngOrder] = doPivoting(value,rowPtr,colInd,b)
 % With row, change b
 % With column, record indices to permute x vector values
-path(path,genpath(pwd));
+% path(path,genpath(pwd));
 valueTemp = value;
 rowPtrTemp = rowPtr;
 colIndTemp = colInd;
@@ -16,6 +19,7 @@ rowPtrNew = rowPtr;
 colIndNew = colInd;
 bNew = b;
 for iter2 = 1:aRank-1
+    % Finding maximum value that should be a pivot
     [~,ind] = max(valueTemp);
     colNum = colIndTemp(ind);
     for iter3 = 1:aRankTemp
@@ -35,9 +39,13 @@ for iter2 = 1:aRank-1
         chngOrder(iter2) = colNum+iter2-1;
         chngOrder(colNum+iter2-1) = iter2;
     end
-    if (rowNum==1) && (colNum==1)
-        break;
-    end
+    % --------------------------------BUG----------------------------------
+%     if (rowNum==1) && (colNum==1)
+%         % This is the case when element in the first row and column is the
+%         % pivot element. Do Nothing.
+%         break;
+%     end
+    % ---------------------------------------------------------------------
     aRankTemp = aRankTemp - 1;
     diffRow = zeros(1,aRankTemp+1);
     for iter4 = 2:aRankTemp+1

@@ -51,7 +51,7 @@ function [res] = paraExtractLS(par)
             warning('Wrong solver mode. Choose Options: QN, SC')
     end
     if (par.ls == YES)
-        t = [10, 1, 0.1];
+        t = [100, 10, 1, 0.1, 0.01, 0.001];
     else 
         t = 1;
     end

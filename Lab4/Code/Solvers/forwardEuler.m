@@ -10,7 +10,7 @@ function xt = forwardEuler(tmin,tmax,delT,x0,ode)
 % Input:
 % tmin: Starting Time
 % tmax: Final time
-% delT: Time step (fixed for all ODEs
+% delT: Time step (fixed for all ODEs)
 % x0: Vector of initial x values
 % ode: Function handle to the ODE to be solved
 % -----------------------------------------------------------------------

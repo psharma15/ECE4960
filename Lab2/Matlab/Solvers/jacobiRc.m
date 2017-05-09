@@ -22,7 +22,7 @@ indexDiagonal = zeros(1,ARank);
 diffRowLU = zeros(1,m);
 rowPtrLU = [1 zeros(1,ARank)];
 for iter2 = 1:ARank
-    nonZeroLU = diffRow(iter2+1);
+    nonZeroLU = diffRow(iter2+1); % Stores number of non zero elements in LU in one row
     for iter3 = rowPtr(iter2):rowPtr(iter2+1)-1
         if (colInd(iter3) == iter2) %% check if non-zero
             if (value(iter3) ~= 0)
@@ -50,6 +50,7 @@ while (iter4 <= lengthLU)
         iter4 = iter4 + 1;
     else
         if (indexDiagonal(counter1) == counter2)
+            % Redundant if statement.
             counter1 = counter1 + 1;
         end
     end

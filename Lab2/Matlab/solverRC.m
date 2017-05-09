@@ -8,12 +8,12 @@ path(path,genpath(pwd));
 
 %% Select options here
 matSize = 'large';
-maxIter = 20;
+maxIter = 200;
 testOn = 1;
 if strcmp(matSize,'large')
     bOpt = 3;
 end
-solverMethod = 'gaussSeidelD'; % Epsilon varies with this.
+solverMethod = 'jacobiD'; % Epsilon varies with this.
 tolSolver = 1e-7;              % Tolerance of Solver
 tolSolution = 1e-2;            % Tolerance with 'true' Solution
 
@@ -32,7 +32,7 @@ switch matSize
         matRank = length(rowPtr)-1;
         b = sort(1:matRank,'Descend'); 
         % Precondition with Epsilon for diagonal dominance
-        epsilon = 0.001; 
+        epsilon = 1; 
     case 'large'
         % Get Memplus in row compressed format 
         [rowPtr,colInd,value,rank] = testDataMemplusRC();
