@@ -19,6 +19,8 @@ tol = 5e-5;             % Tolerance
 f = zeros(nn,1);        % Initializing FEM result vector
 f(1) = exp(0);          % Implementing Boundary Conditions
 f(nn) = exp(1);
+path1 = cd;
+addpath([path1,'\lib']);% Adding path of library
 
 %% Starting iterative method for non-linear problem
 % ------------------------------------------------------------------------
@@ -26,6 +28,8 @@ iterFlag = 1;           % Flag to stop/ continue iterations
 count = 0;              % Number of iterations
 tic                     % Starting time measurement
 testOn = 1;             % Testing individual modules in ASSEMBLY
+memoryInitial = memory; % Memory usage till this point in code
+
 while(iterFlag)
     f1 = assembly(f,n,h,testOn,tol);
     testOn = 0;
@@ -40,8 +44,11 @@ while(iterFlag)
     count = count + 1;
 end
 
-err = abs(f - exp(x)'); % Calculating error
-timeCalc = toc;         % Time taken for the entire operation
+memoryFinal = memory;                 % Memory usage after the computation
+err = abs(f - exp(x)');               % Calculating error
+timeCalc = toc;                       % Time taken for entire operation
+MemUse =  (memoryFinal.MemUsedMATLAB - ...
+    memoryInitial.MemUsedMATLAB)/1e6; % Total memory usage increase
 
 %% Verification: FEM with exact solution
 % ------------------------------------------------------------------------
@@ -56,5 +63,6 @@ ylabel('u(x)')
 title('Solution plot using FEM');
 
 fprintf('Time taken is = %f sec\n',timeCalc);
+fprintf('Memory usage increase is %d Mb \n',MemUse);
 end
 
