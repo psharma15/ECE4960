@@ -19,6 +19,8 @@ tol = 5e-5;             % Tolerance
 f = zeros(nn,1);        % Initializing FEM result vector
 f(1) = exp(0);          % Implementing Boundary Conditions
 f(nn) = exp(1);
+path1 = cd;
+addpath([path1,'\lib']);% Adding path of library
 
 %% Starting iterative method for non-linear problem
 % ------------------------------------------------------------------------
