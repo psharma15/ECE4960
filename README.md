@@ -1,4 +1,4 @@
-# ECE4960
+# ECE4960: Computational and Software Engineering
 This contains Programming Assignments and Projects of ECE4960 Fall 17
 Lab1 : Arithmetic Exception Handeling
 Lab2 : Modular Testing in Sparse Matrix Solvers
